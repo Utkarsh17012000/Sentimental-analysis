@@ -145,7 +145,7 @@ final_model.fit(stem_X,target)
 print("Accuracy(C=0.05) with Stemmed Reviews is: {}\n".format(accuracy_score(target,final_model.predict(stem_X_test))))
 #accuracy=0.93748
 print("\n")
-'''
+
 def to_lemma_reviews(corpus):
 	from nltk.stem import WordNetLemmatizer
 	wnl = WordNetLemmatizer()
@@ -167,6 +167,7 @@ for c in [0.01,0.05,0.25,0.5,1]:
 	print("Accuracy(lemmatized reviews) for C: {}, {}".format(c,accuracy_score(testing_values,lr.predict(testing_data))))
 #C comes out to be same though, taking C=0.05
 
+final_model = LogisticRegression(C=0.05)
 final_model.fit(lemma_X,target)
 print("Accuracy(C=0.05) with Lemmatized Reviews is: {}\n".format(accuracy_score(target,final_model.predict(lemma_X_test))))
 '''
