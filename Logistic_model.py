@@ -145,7 +145,7 @@ final_model.fit(stem_X,target)
 print("Accuracy(C=0.05) with Stemmed Reviews is: {}\n".format(accuracy_score(target,final_model.predict(stem_X_test))))
 #accuracy=0.93748
 print("\n")
-
+'''
 def to_lemma_reviews(corpus):
 	from nltk.stem import WordNetLemmatizer
 	wnl = WordNetLemmatizer()
@@ -236,10 +236,31 @@ final_model = LogisticRegression(C=1)
 final_model.fit(tf_X,target)
 print("Accuracy(C=0.05) using Tf-Idf: {}".format(accuracy_score(target,final_model.predict(X_test))))
 #accuracy=0.86204
+print('\n')
 #-------------------------------------------------------------------------------
 
+#final model with linear support vector machines(projections within the same space)
+from sklearn.svm import LinearSVC
 
+stopwords = ['a','an','the','in','of','at']
+vec = CountVectorizer(binary=True,ngram_range=(1,2),stop_words=stopwords)
 
+vec.fit(reviews_train_clean)
+training_reviews = vec.transform(reviews_train_clean)
+testing_reviews = vec.transform(reviews_test_clean)
+'''
+#testing for different values for C
+training_data,testing_data,training_values,testing_values = train_test_split(training_reviews,target,train_size=0.75)
+for c in [0.001,0.005,0.01,0.05,0.1]:
+	svm = LinearSVC(C=c)
+	svm.fit(training_data,training_values)
+	print("Accuracy c({})= {}".format(c,accuracy_score(testing_values,svm.predict(testing_data))))
+#best C comes out to be 0.01 
+'''
+final_model = LinearSVC(C=0.01)
+final_model.fit(training_reviews,target)
+print("Accuracy with SVM c(0.01): {}".format(accuracy_score(target,final_model.predict(testing_reviews))))
+#accuracy = 0.89956
 
 
 
